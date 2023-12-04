@@ -1,0 +1,46 @@
+{% extends 'elements/user_base.html' %}
+{% block title %}SignUp{% endblock %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div id="layoutAuthentication_content">
+    <main>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-5">
+                    <div class="card shadow-lg border-0 rounded-lg mt-5">
+                        <div class="card-header"><h3 class="text-center font-weight-light my-3">Sign Up</h3></div>
+                        <div class="card-body">
+
+                            {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+                                    <!-- ubicar alerta dentro de un contenedor eliminable -->
+                                    {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+                                </div>
+                            {% endfor %}
+                            {% endif %}
+
+                            <form method="POST">
+
+                                {% csrf_token %}
+                                {{ form|crispy }}
+                                <input class="btn btn-success offset-md-9" type="submit" value="  Sign Up 🙂  ">
+
+                            </form>
+
+                        </div>
+                        <div class="card-footer text-center py-3">
+                            <div class="small"><a href="{% url 'login' %}">Registrado? Inicia sesion aqui!</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+{% endblock %}

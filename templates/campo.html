@@ -1,0 +1,118 @@
+{% extends 'elements/base.html' %}
+
+{% block title %}Campos{% endblock %}
+{% block subtitle %}Campos{% endblock %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+    <li class="breadcrumb-item active">Campos</li>
+</ol>
+
+<div>
+    <div class="row mt-4">
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    Modificar Equivalencia Brent
+                </div>
+                <div class="card-body">
+
+                    {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        
+                        </div>
+                    {% endfor %}
+                    {% endif %}
+                    
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ crudo_form|crispy }}
+                        <input class="btn btn-success btn-block" type="submit" value="Confirm">
+                    </form>
+                </div>
+            </div>
+
+            <br>
+            <hr>
+            <br>
+
+
+            <table class="table bg-white">
+                <thead class="bg-success text-white">
+                    <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">gravedad</th>
+                        <th scope="col">Azufre</th>
+                        <th scope="col">Precio</th>
+                        <th scope="col">Equiv.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cu in crudos %}
+                    <tr>
+                        <td>{{cu.name}}</td>
+                        <td>{{cu.gravedad}}</td>
+                        <td>{{cu.porcentaje_azufre}}</td>
+                        <td>{{cu.precio_promedio}}</td>
+                        <td>{{cu.equivalencia_brent}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header bg-light">
+                    <i class="fas fa-table me-1"></i>
+                    Resumen de Campos
+                </div>
+                <div class="card-body">
+                    <table id="datatablesSimple">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Territorio</th>
+                                <th>Operador</th>
+                                <th>Crudo</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Territorio</th>
+                                <th>Operador</th>
+                                <th>Crudo</th>
+                            </tr>
+                        </tfoot>
+
+                        <tbody>
+                            {% for c in campos %}
+                            <tr>
+                                <td>{{c.name}}</td>
+                                <td>{{c.territorio.name}}</td>
+                                <td>{{c.operador.name}}</td>
+                                <td>{{c.crudo_name.name}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}

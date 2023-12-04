@@ -1,0 +1,27 @@
+{% extends 'elements/base.html' %}
+
+{% block title %}Conceder Permisos{% endblock %}
+
+
+{% block content %}
+
+<div class="row my-4 d-flex  align-items-center justify-content-center">
+    <div class="col-md-6 ">
+        <div class="border p-3 bg-white">
+            <h4>Conceder Permisos de Usuario</h4>
+            <hr>
+            <form method="POST">
+                <div class="alert alert-warning">
+                    <p>Esta seguro de concederle a {{ staff.username|title }} permisos de Contador?</p>
+                </div>
+
+                {% csrf_token %}
+
+                <a class="btn btn-secondary btn-sm" href="{% url 'staff_detail' staff.id %}">Cancelar</a>
+                <input class="btn btn-warning btn-sm" type="submit" value="Conceder">
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

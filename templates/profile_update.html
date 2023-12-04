@@ -1,0 +1,39 @@
+{% extends 'elements/base.html' %}
+{% block title %}Actualizar Perfil{% endblock %}
+{% block subtitle %} {{ user.username|title }}'s Profile {% endblock %}
+
+
+{% load crispy_forms_tags %}
+{% block content %}
+
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="{% url 'profile' %}">Perfil</a></li>
+    <li class="breadcrumb-item active">Actualizar Perfil</li>
+</ol>
+
+<div class="row my-4">
+    <div class="col-md-0"></div>
+    <div class="col-md-11">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                Panel de Actualizacion
+            </div>
+            <div class="row p-4">
+                <div class="col-md-8">
+                    <div class="d-flex  align-items-center justify-content-center offset-md-5">
+                    <form method="POST" enctype="multipart/form-data" class="">
+
+                        {% csrf_token %}
+                        {{ user_form|crispy }}
+                        {{ profile_form|crispy }}
+
+                        <input class="btn btn-success" type="submit" value="Actualizar">
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

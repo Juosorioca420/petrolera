@@ -1,0 +1,87 @@
+{% extends 'elements/base.html' %}
+
+{% block title %}Indicadores{% endblock %}
+{% block subtitle %}Indicadores{% endblock %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+    <li class="breadcrumb-item active">Indicadores</li>
+</ol>
+
+<div>
+    <div class="row mt-4">
+
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    Actualizacion de Indicadores
+                </div>
+                <div class="card-body">
+
+                    {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        
+                        </div>
+                    {% endfor %}
+                    {% endif %}
+                    
+                    <form method="POST">
+
+                        {% csrf_token %}
+                        {{ indicador_form|crispy }}
+
+                        <input class="btn btn-success btn-block" type="submit" value="Confirm">
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header bg-light">
+                    <i class="fas fa-table me-1"></i>
+                    Resumen de Indicadores
+                </div>
+                <div class="card-body">
+                    <table id="datatablesSimple">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Brent</th>
+                                <th>TRM</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>ID</th>
+                                <th>Brent</th>
+                                <th>TRM</th>
+                            </tr>
+                        </tfoot>
+            
+                        <tbody>
+                            {% for i in indicadores %}
+                            <tr>
+                                <td>{{i.id}}</td>
+                                <td>{{i.brent}}</td>
+                                <td>{{i.trm}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+            
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

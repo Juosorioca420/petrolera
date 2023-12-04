@@ -1,0 +1,145 @@
+{% extends 'elements/base.html' %}
+
+{% block title %}Carrotanques{% endblock %}
+{% block subtitle %}Carrotanques{% endblock %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+    <li class="breadcrumb-item active">Carrotanques</li>
+</ol>
+
+<div>
+    <div class="row mt-4">
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    Desplazar Vehiculo
+                </div>
+                <div class="card-body">
+
+                    {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        
+                        </div>
+                    {% endfor %}
+                    {% endif %}
+                    
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <input class="btn btn-success btn-block" type="submit" value="Confirm">
+                    </form>
+                </div>
+            </div>
+
+            <p></p>
+            <hr>
+            <p><strong>Historial</strong></p>
+            <div class="row">
+                <div class="col-md-6">
+                
+
+                <table class="table bg-white">
+                    <thead class="bg-success text-white">
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Territorio</th>
+                            <th scope="col">Fecha</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for h in historia %}
+                        <tr>
+                            <td>{{h.carrotanque_id}}</td>
+                            <td>{{h.territorio}}</td>
+                            <td>{{h.fecha_asignacion}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-success text-white">
+                            Capacidad de Transporte por Territorio
+                        </div>
+                        <div class="card-body">
+        
+                            
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                {% if capacidad %}
+                                {{ capacidad }}
+                                {% else %}
+                                Sin Vehiculos disponibles de momento.
+                                {% endif %}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            
+                            </div>
+                            
+                            
+                            <form method="GET">
+                                {% csrf_token %}
+                                {{ capacidad_form | crispy }}
+                                <input class="btn btn-success btn-sm" type="submit" value="Submit">
+                            </form>
+        
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header bg-light">
+                    <i class="fas fa-table me-1"></i>
+                    Resumen de Carrotanques
+                </div>
+                <div class="card-body">
+                    <table id="datatablesSimple">
+                        <thead>
+                            <tr>
+                                <th>Matricula</th>
+                                <th>Capacidad</th>
+                                <th>Territorio</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Matricula</th>
+                                <th>Capacidad</th>
+                                <th>Territorio</th>
+                            </tr>
+                        </tfoot>
+
+                        <tbody>
+                            {% for c in carros %}
+                            <tr>
+                                <td>{{c.id}}</td>
+                                <td>{{c.capacidad_litros}}</td>
+                                <td>{{c.territorio.name}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}

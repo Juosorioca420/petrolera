@@ -1,0 +1,56 @@
+{% extends 'elements/base.html' %}
+
+{% block title %}Usuarios{% endblock %}
+{% block subtitle %}Usuarios{% endblock %}
+
+
+{% block content %}
+
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+    <li class="breadcrumb-item active">Usuarios</li>
+</ol>
+
+
+<div class="card mb-4 ">
+    <div class="card-header bg-light">
+        <i class="fas fa-users me-1"></i>
+        Resumen de Usuarios
+    </div>
+
+<div class="card-body ">
+
+        <table class="table bg-white">
+            <thead class="bg-light text-black">
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">C.C</th>
+                    <th scope="col">Cargo</th>
+                    <th scope="col">E-mail</th>
+                    <th scope="col">Imagen de Perfil</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for staff in staff_list %}
+                <tr>
+                    <th scope="row"><a class="btn btn-success btn-sm"
+                        href=" {% url 'staff_detail' staff.id %} ">Detalles</a></th>
+
+                    <td>{{ staff.username }}</td>
+                    <td>{{ staff.profile.cc }}</td>
+                    <td>{{ staff.profile.position }}</td>
+                    <td>{{ staff.email }}</td>
+                    
+                    <td><img class="img-thumbnail" src="{{ staff.profile.image.url }}" 
+                         alt="profile-image" style="width: 150px; height: 125px;"></td>
+
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+</div>
+</div>
+
+{% endblock %}

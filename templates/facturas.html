@@ -1,0 +1,132 @@
+{% extends 'elements/base.html' %}
+
+{% block title %}Facturas{% endblock %}
+{% block subtitle %}Facturas{% endblock %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+    <li class="breadcrumb-item active">Facturas</li>
+</ol>
+
+<div>
+    <div class="row mt-4">
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    Creacion de Facturas
+                </div>
+                <div class="card-body">
+
+                    {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        
+                        </div>
+                    {% endfor %}
+                    {% endif %}
+                    
+                    <form method="POST">
+
+                        {% csrf_token %}
+                        {{ factura_form|crispy }}
+
+                        <input class="btn btn-success btn-block" type="submit" value="Confirm">
+                    </form>
+                </div>
+            </div>
+
+            <br>
+            <hr>
+            <br>
+
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    Consulta de Produccion Promedio por Campo
+                </div>
+                <div class="card-body">
+
+                    
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        {% if avg %}
+                        {{ avg }}
+                        {% else %}
+                        No hay Facturas registradas para este Campo.
+                        {% endif %}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    
+                    </div>
+                    
+                    
+                    <form method="GET">
+                        {% csrf_token %}
+                        {{ avg_form | crispy }}
+                        <input class="btn btn-success btn-sm" type="submit" value="Submit">
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-8">
+            <div> <h6>Valor Total Facturado: <strong>{{total}}</strong></h6> </div>
+            <div class="card mb-4">
+                <div class="card-header bg-light">
+                    <i class="fas fa-table me-1"></i>
+                    Resumen de Facturas
+                </div>
+                <div class="card-body">
+                    <table id="datatablesSimple">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Fecha</th>
+                                <th>Campo</th>
+                                <th>Valor</th>
+                                <th>Cantidad</th>
+                                <th>Edicion</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>ID</th>
+                                <th>Fecha</th>
+                                <th>Campo</th>
+                                <th>Valor</th>
+                                <th>Cantidad</th>
+                                <th>Edicion</th>
+                            </tr>
+                        </tfoot>
+
+                        <tbody>
+                            {% for f in facturas %}
+                            <tr>
+                                <td>{{f.id}}</td>
+                                <td>{{f.acta.month}}, {{f.acta.year}}</td>
+                                <td>{{f.campo.name}}</td>
+                                <td>{{f.valor}}</td>
+                                <td>{{f.cantidad_barriles_kbpd}}</td>
+                                <td>
+                                    <a class="btn btn-danger btn-sm" href="{% url 'delete_factura' f.id %}">Delete</a>
+                                </td>
+
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}

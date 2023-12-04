@@ -1,0 +1,113 @@
+{% extends 'elements/base.html' %}
+
+{% block title %}Detalle de Usuario{% endblock %}
+{% block subtitle %}Usuarios{% endblock %}
+
+
+{% load crispy_forms_tags %}
+{% block content %}
+
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'staff' %}">Usuarios</a></li>
+    <li class="breadcrumb-item active">Detalles</li>
+</ol>
+
+<div class="row my-4">
+    <div class="col-md-0"></div>
+    <div class="col-md-11">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                Panel de Administracion de Usuarios
+            </div>
+            <div class="row p-5">
+                <div class="col-md-8">
+
+                    <table class="table table-borderless">
+
+                        <thead>
+                            <span class="h4">Informacion de {{staff.username|title}}</span class="h4">
+
+                                <a class="btn btn-danger btn-sm align-items-right justify-content-right p-1 offset-sm-1" 
+                                href="{% url 'staff_delete' staff.id %}">Eliminar</a>
+                            <hr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <th scope="row">Nombre</th>
+                                <td>{{ staff.username }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">C.C</th>
+                                <td>{{ staff.profile.cc }}</td>
+                            </tr>
+
+
+                            <tr>
+                                <th scope="row">Cargo</th>
+                                <td>
+                                    {{staff.profile.position}}
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+                                <th scope="row">E-mail</th>
+                                <td>{{ staff.email }}</td>
+                            </tr>
+                            
+                        </tbody>
+
+                    </table>
+
+                    <hr>
+                    <span class="h5">Permisos</span class="h5">
+                    <p></p>
+       
+
+                        {% if staff.is_superuser %}
+                        <a class="btn btn-success btn-sm">Admin</a>
+                        <a class="btn btn-secondary btn-sm" href="{% url 'staff_staff' staff.id %}">Logistics</a>
+                        <a class="btn btn-secondary btn-sm" href="{% url 'staff_active' staff.id %}">Accountant</a>
+                        
+                        {% elif staff.is_staff %}
+                        <a class="btn btn-secondary btn-sm" href="{% url 'staff_super' staff.id %}">Admin</a>
+                        <a class="btn btn-success btn-sm">Logistics</a>
+                        <a class="btn btn-secondary btn-sm" href="{% url 'staff_active' staff.id %}">Accountant</a>
+
+                        {% else %}
+                        <a class="btn btn-secondary btn-sm" href="{% url 'staff_super' staff.id %}">Admin</a>
+                        <a class="btn btn-secondary btn-sm" href="{% url 'staff_staff' staff.id %}">Logistics</a>
+                        <a class="btn btn-success btn-sm">Accountant</a>
+                        {% endif %}
+
+                        <p> </p>
+                        <p> </p>
+                       
+
+                        <form method="POST">
+                       
+                            {% csrf_token %}
+                            {{ form|crispy }}
+                            <input class="btn btn-warning btn-sm" type="submit" value="Edit">
+                     
+                        </form>
+
+                    <!-- <hr>
+                    <span class="h5">Reports</span class="h5">
+                    <p></p> -->
+
+                </div>
+                <div class="col-md-4">
+                    <img class="img-thumbnail" src="{{ staff.profile.image.url }}" alt="profile-image">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

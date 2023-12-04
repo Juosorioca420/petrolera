@@ -1,0 +1,94 @@
+{% extends 'elements/base.html' %}
+
+{% block title %}Actas{% endblock %}
+{% block subtitle %}Actas{% endblock %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+    <li class="breadcrumb-item active">Actas</li>
+</ol>
+
+<div>
+    <div class="row mt-4">
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    Promedio de Regalias por Operador
+                </div>
+                <div class="card-body">
+
+                    {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        
+                        </div>
+                    {% endfor %}
+                    {% endif %}
+                    
+                    <form method="POST">
+
+                        {% csrf_token %}
+                        {{ operador_form|crispy }}
+
+                        <input class="btn btn-success btn-block" type="submit" value="Confirm">
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header bg-light">
+                    <i class="fas fa-table me-1"></i>
+                    Verificacion de Actas Mensuales
+                </div>
+                <div class="card-body">
+                    <table id="datatablesSimple">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Año</th>
+                                <th>Mes</th>
+                                <th>Valor Total</th>
+                                <th>Facturas Registradas</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>ID</th>
+                                <th>Año</th>
+                                <th>Mes</th>
+                                <th>Valor Total</th>
+                                <th>Facturas Registradas</th>
+                            </tr>
+                        </tfoot>
+            
+                        <tbody>
+                            {% for id, year, month, count_f, sum_f in actas %}
+                            <tr>
+                                <td>{{id}}</td>
+                                <td>{{year}}</td>
+                                <td>{{month}}</td>
+                                <td>{{sum_f}}</td>
+                                <td>{{count_f}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+            
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}

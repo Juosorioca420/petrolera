@@ -1,0 +1,63 @@
+{% extends 'elements/base.html' %}
+{% block title %}Perfil{% endblock %}
+{% block subtitle %} {{ user.username|title }}'s Profile {% endblock %}
+
+
+{% load crispy_forms_tags %}
+{% block content %}
+
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item">Perfil</li>
+</ol>
+
+<div class="row my-4">
+    <div class="col-md-0"></div>
+    <div class="col-md-11">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                Panel de Perfil
+            </div>
+            <div class="row p-5">
+                <div class="col-md-8">
+
+                    <table class="table table-borderless">
+
+                        <thead>
+                            <span class="h4">Informacion de Usuario</span class="h4">
+                                <a class="btn btn-secondary btn-sm align-items-right justify-content-right offset-md-1"
+                                 href="{% url 'profile_update' %}">Edit</a>
+                            <hr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <th scope="row">Nombre</th>
+                                <td>{{ user.username }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">C.C</th>
+                                <td>{{ user.profile.cc }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Cargo</th>
+                                <td>{{ user.profile.position }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">E-mail</th>
+                                <td>{{ user.email }}</td>
+                            </tr>
+                            
+                        </tbody>
+
+                    </table>
+
+                </div>
+                <div class="col-md-4">
+                    <img class="img-thumbnail" src="{{ user.profile.image.url }}" alt="profile-image">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

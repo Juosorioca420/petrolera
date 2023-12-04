@@ -1,0 +1,106 @@
+{% extends 'elements/base.html' %}
+
+{% block title %}Oleoductos{% endblock %}
+{% block subtitle %}Oleoductos{% endblock %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+    <li class="breadcrumb-item active">Oleoductos</li>
+</ol>
+
+<div>
+    <div class="row">
+
+            <div class="col-md-5">
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        Resumen de Oleoductos
+                    </div>
+                    <div class="card-body">
+                        <table class="table bg-white">
+                            <thead class="bg-light text-black">
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Nombre</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {% for o in oleoductos %}
+                                <tr>
+                                    <td>{{o.id}}</td>
+                                    <td>{{o.name}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+
+                <br>
+                <hr>
+
+                <p><strong>Puertos</strong></p>
+                <table class="table bg-white">
+                    <thead class="bg-success text-white">
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Territorio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for p in puertos %}
+                        <tr>
+                            <td>{{p.name}}</td>
+                            <td>{{p.territorio.name}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+
+            </div>
+    
+
+        <div class="col-md-7">
+            <div class="card mb-4">
+                <div class="card-header bg-light">
+                    <i class="fas fa-table me-1"></i>
+                    Estaciones de Oleoductos
+                </div>
+                <div class="card-body">
+                    <table id="datatablesSimple">
+
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Territorio</th>
+                                <th>Estacion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for e in estaciones %}
+                            <tr>
+                                <td>{{e.oleoducto.id}}</td>
+                                <td>{{e.territorio}}</td>
+                                <td>{{e.estacion}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+
+                    </table>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}

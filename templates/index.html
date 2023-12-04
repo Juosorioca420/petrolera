@@ -1,0 +1,81 @@
+{% extends 'elements/base.html' %}
+
+{% block title %}Home Page{% endblock %}
+{% block subtitle %}Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="row">
+
+    <div class="col-xl-12">
+        <div class="card mb-4">
+
+            <div class="card-header">
+                <i class="fas fa-chart-line me-1"></i>
+                Registro del Valor de Regalias
+            </div>
+            <div class="card-body">
+
+                {{fig1 | safe}}
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-xl-6">
+        <div class="card mb-4">
+
+            <div class="card-header">
+                <i class="fas fa-chart-line me-1"></i>
+                Regalias por Operador
+            </div>
+            <div class="card-body">
+
+                {{fig4 | safe}}
+
+            </div>
+
+        </div>
+    </div>
+    <div class="col-xl-6">
+        <div class="card mb-4">
+
+            <div class="card-header">
+                <i class="fas fa-chart-line me-1"></i>
+                Regalias por Crudo
+            </div>
+            <div class="card-body">
+
+                {{fig3 | safe}}
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card mb-4">
+
+            <div class="card-header">
+                <i class="fas fa-chart-line me-1"></i>
+                Regalias por Territorio
+            </div>
+            <div class="card-body">
+
+                {{fig2 | safe}}
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
