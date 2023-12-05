@@ -184,6 +184,7 @@ def campo(request):
         if crudo_form.is_valid():
             current = crudo_form.cleaned_data.get('crudo_name')
             equiv = crudo_form.cleaned_data.get('equiv')
+            equiv = round(equiv,3)
 
             print(current, equiv)
 

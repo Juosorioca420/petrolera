@@ -136,7 +136,6 @@ class HistoriaCarrotanque(models.Model):
     territorio = models.CharField(max_length=20, blank=True, null=True)
     territorio_id = models.CharField(max_length=6, blank=True, null=True)
     fecha_asignacion = models.DateField(blank=True, null=True)
-    empleado = models.CharField(max_length=25, blank=True, null=True)
 
     class Meta:
         managed = True
